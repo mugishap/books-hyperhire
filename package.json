@@ -8,7 +8,7 @@
     "dev": "nodemon --exec ts-node app.ts",
     "start": "ts-node app.ts",
     "build": "tsc",
-    "serve": "nodemon dist/app.js"
+    "serve": "nodemon dist/app"
   },
   "author": "mugishap",
   "license": "MIT",
