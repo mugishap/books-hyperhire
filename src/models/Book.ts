@@ -25,7 +25,7 @@ const bookSchema = new Schema({
         min: 0,
         required: true
     },
-    coverImageUrl: {
+    coverImage: {
         type: String,
         required: true
     },

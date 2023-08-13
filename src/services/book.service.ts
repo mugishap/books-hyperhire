@@ -9,13 +9,13 @@ const createBook = async (req, res) => {
         const { error } = CreateBookSchema.validate(req.body)
         if (error) return res.status(400).json({ error: error.message })
         const { title, description, discountRate, price, coverImageString } = req.body
-        const coverImageUrl = await uploadFile(coverImageString)
+        const coverImage = await uploadFile(coverImageString)
         const book = await new Book({
             title,
             description,
             discountRate,
             price,
-            coverImageUrl
+            coverImage
         });
         await book.save()
         return res.status(201).json(ApiResponse.success("Book created successfully", { book }))
@@ -33,7 +33,7 @@ const createMultipleBooks = async (req, res) => {
                 description,
                 discountRate,
                 price,
-                coverImageUrl: coverImageString
+                coverImage: coverImageString
             }
         })
         const createdBooks = await Book.insertMany(bookDocuments);
@@ -49,13 +49,13 @@ const updateBook = async (req, res) => {
         const { error } = UpdateBookSchema.validate(req.body)
         if (error) return res.status(400).json(ApiResponse.error(error.details[0].message, null))
         const { title, description, discountRate, price, coverImageString } = req.body
-        const coverImageUrl = await uploadFile(coverImageString)
+        const coverImage = await uploadFile(coverImageString)
         const book = await Book.findByIdAndUpdate(req.params.id, {
             title,
             description,
             discountRate,
             price,
-            coverImageUrl
+            coverImage
         })
         if (!book) return res.status(404).json(ApiResponse.error("Book not found", null))
         return res.status(200).json(ApiResponse.success("Book updated successfully", { book }))
